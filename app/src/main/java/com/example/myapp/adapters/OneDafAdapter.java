@@ -19,11 +19,14 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
     private LayoutInflater mInflater;
     private Context context;
     private ArrayList<DafLearning1> myListDaf = new ArrayList<>();
+    private ArrayList<DafLearning1> myListALLDaf = new ArrayList<>();
+    private ArrayList<DafLearning1> myListFilterDaf = new ArrayList<>();
 
     public OneDafAdapter(Context context, ArrayList<DafLearning1> myListDaf) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
-        this.myListDaf = myListDaf;
+        this.myListALLDaf = myListDaf;
+        this.myListDaf.addAll(myListALLDaf);
     }
 
     @NonNull
@@ -44,7 +47,20 @@ public class OneDafAdapter extends RecyclerView.Adapter<OneDafAdapter.ViewHolder
         return myListDaf.size();
     }
 
+    public void filterAllMasechtot(String myNameMasechet){
+        myListFilterDaf.clear();
+        for (int i = 0; i <myListALLDaf.size() ; i++) {
+            if (myListALLDaf.get(i).getMasechet().equals(myNameMasechet)) {
+                myListFilterDaf.add(myListALLDaf.get(i));
+            }
 
+        }
+        myListDaf.clear();
+        myListDaf.addAll(myListFilterDaf);
+        notifyDataSetChanged();
+
+
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder  {
         CheckBox ifLernning;

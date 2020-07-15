@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.model.DafLearning1;
-import com.example.myapp.R;
 import com.example.myapp.activity.SplashActivity;
 import com.example.myapp.adapters.NameAllMasechtotAdapter;
 import com.example.myapp.adapters.OneDafAdapter;
@@ -24,10 +23,12 @@ import java.util.ArrayList;
  * Use the {@link ShewStudyRvFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShewStudyRvFragment extends Fragment {
+public class ShewStudyRvFragment extends Fragment implements NameAllMasechtotAdapter.NameMasechet {
     FragmentShewStudyRvBinding binding;
     ArrayList<DafLearning1> myList1 = new ArrayList<>();
     boolean showListMasechtot;
+    OneDafAdapter myAdapter;
+
 
 
     public ShewStudyRvFragment() {
@@ -68,7 +69,7 @@ public class ShewStudyRvFragment extends Fragment {
 
         RecyclerView recyclerView = binding.showStudyRVDapim;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        OneDafAdapter myAdapter = new OneDafAdapter(getContext(),myList1);
+        myAdapter = new OneDafAdapter(getContext(),myList1);
         recyclerView.setAdapter(myAdapter);
     }
 
@@ -79,7 +80,7 @@ public class ShewStudyRvFragment extends Fragment {
         for (int i = 1; i <myList1.size() ; i++) {
             if(i == myList1.size()-1){
                 allMasechtot.add(myList1.get(i).getMasechet());
-                NameAllMasechtotAdapter myAdapter2 = new NameAllMasechtotAdapter(getContext(),allMasechtot);
+                NameAllMasechtotAdapter myAdapter2 = new NameAllMasechtotAdapter(getContext(),allMasechtot,this);
                 recyclerViewMasechtot.setAdapter(myAdapter2);
                 return;
             }
@@ -88,6 +89,13 @@ public class ShewStudyRvFragment extends Fragment {
             }
 
         }
+
+    }
+
+    @Override
+    public void nameMasechet(String nameMasechet) {
+        myAdapter.filterAllMasechtot(nameMasechet);
+
 
     }
 }

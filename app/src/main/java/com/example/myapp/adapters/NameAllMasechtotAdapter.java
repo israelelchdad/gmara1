@@ -17,9 +17,11 @@ public class NameAllMasechtotAdapter extends RecyclerView.Adapter<NameAllMasecht
     private LayoutInflater mInflater;
     private Context context;
     private ArrayList<String> allMasechtot = new ArrayList<>();
+    private NameMasechet myNameMasechet;
 
-    public NameAllMasechtotAdapter(Context context, ArrayList<String> allMasechtot ) {
+    public NameAllMasechtotAdapter(Context context, ArrayList<String> allMasechtot, NameMasechet myNameMasechet ) {
         this.context = context;
+        this.myNameMasechet = myNameMasechet;
         this.mInflater = LayoutInflater.from(context);
         this.allMasechtot =allMasechtot;
     }
@@ -43,6 +45,7 @@ public class NameAllMasechtotAdapter extends RecyclerView.Adapter<NameAllMasecht
     public class ViewHolder extends RecyclerView.ViewHolder  {
 
         TextView masechet;
+        String myMasechet;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -51,8 +54,22 @@ public class NameAllMasechtotAdapter extends RecyclerView.Adapter<NameAllMasecht
 
         public void setHolder(String nameMasechet) {
             masechet.setText(nameMasechet);
+            myMasechet = nameMasechet;
+            masechet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(myNameMasechet!=null){
+                        myNameMasechet.nameMasechet(myMasechet);
+                    }
+
+                }
+            });
         }
     }
+    public interface NameMasechet {
+        void nameMasechet(String nameMasechet);
+    }
+
 
 
 
